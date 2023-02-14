@@ -9,12 +9,21 @@
   <h4>Cast</h4>
   {{#each details.cast}}
     <ul>
-      <li>Name: {{this.name}} </li>
-      <li>Occupation: {{this.occupation}}</li>
-      <li>Phrase: {{this.catchPhrase}}</li>
+      <li>
+        Name: {{this.name}}
+        <br> 
+        Occupation: {{this.occupation}}
+        <br>
+        Phrase: {{this.catchPhrase}}
+        <br>
+      </li>
     </ul>
 
   {{/each}}
+
+  <a href="/movies/{{details._id}}/edit">
+      <button>Go to Update</button>
+  </a>
 
   <form action="/movies/{{details._id}}/delete" method="post">
     <button>Delete</button>
