@@ -1,10 +1,11 @@
 const mongoose = require("mongoose")
+
 const celebritiesSchema = new mongoose.Schema({
     name: String,
     occupation: String,
     catchPhrase: String,
 
-    timestamp: true
+    // timestamps: true
 })
 
 //  Add your code here
