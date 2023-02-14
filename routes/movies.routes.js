@@ -50,18 +50,51 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:movieId", async (req, res, next) => {
     try {
-      const { movieId } = req.params;
-  
-      const response = await MoviesModel.findById(movieId).populate("cast");
-      console.log(response);
-  
-      res.render("movies/movie-details.hbs", {
-        details: response,
-      });
+        const { movieId } = req.params;
+        const response = await MoviesModel.findById(movieId).populate("cast");
+
+        res.render("movies/movie-details.hbs", {
+            details: response,
+        });
     } catch (error) {
-      next(error);
+        next(error);
     }
-  });
-  
+});
+
+router.post("/:movieId/delete", async (req, res, next) => {
+
+    try {
+        await MoviesModel.findByIdAndDelete(req.params.movieId);
+        res.redirect("/movies")
+    } catch (error) {
+        next(error)
+    }
+})
+
+router.get("/:movieId/edit", async (req, res, next) => {
+    try {
+        const response = await MoviesModel.findById(req.params.movieId).populate("cast", "name");
+
+        res.render("movies/edit-movie.hbs", response);
+    } catch (error) {
+        next(error);
+    }
+});
+
+router.post("/:movieId/edit", async (req, res, next) => {
+
+    const { movieId } = req.params
+    const { title, genre, plot, cast } = req.body
+
+    try {
+        await MoviesModel.findByIdAndUpdate(movieId, { title, genre, plot, cast })
+        res.redirect("/movies/:movieId")
+
+    } catch (error) {
+        next(error)
+    }
+
+
+})
 
 module.exports = router;
