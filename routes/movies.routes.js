@@ -4,21 +4,21 @@ const CelebrityModel = require("../models/Celebrity.model.js")
 const MoviesModel = require("../models/Movie.model.js")
 
 // GET
-router.get("/create", async (req, res, next)=>{
+router.get("/create", async (req, res, next) => {
     try {
         const response = await CelebrityModel.find().select("name")
         res.render("movies/new-movie", {
             allCast: response
         })
-    } 
+    }
     catch (error) {
-        next(error)    
+        next(error)
     }
 })
 
 // POST
-router.post("/create", async (req, res, next)=>{
-    const {title, genre, plot, cast} = req.body
+router.post("/create", async (req, res, next) => {
+    const { title, genre, plot, cast } = req.body
 
     try {
         const response = await MoviesModel.create({
@@ -28,9 +28,23 @@ router.post("/create", async (req, res, next)=>{
             cast
         })
         res.redirect("/movies")
-    } 
+    }
     catch (error) {
-        next(error)   
+        next(error)
+    }
+})
+
+
+router.get("/", async (req, res, next) => {
+
+    try {
+        const response = await MoviesModel.find()
+        res.render("movies/movies.hbs", {
+            allMovies: response
+        })
+
+    } catch (error) {
+        next(error)
     }
 })
 
