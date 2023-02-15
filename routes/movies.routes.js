@@ -74,8 +74,10 @@ router.post("/:movieId/delete", async (req, res, next) => {
 router.get("/:movieId/edit", async (req, res, next) => {
     try {
         const response = await MoviesModel.findById(req.params.movieId).populate("cast", "name");
+        const allCelebrities = await CelebrityModel.find().select("name")
         res.render("movies/edit-movie.hbs", {
             details: response,
+            allCelebrities: allCelebrities,
         });
     } catch (error) {
         next(error);
